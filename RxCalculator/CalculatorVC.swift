@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  CalculatorVC.swift
 //  RxCalculator
 //
-//  Created by junwoo on 2017. 12. 1..
+//  Created by junwoo on 2017. 12. 4..
 //  Copyright © 2017년 samchon. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class ViewController: UIViewController {
+class CalculatorVC: UIViewController {
   
   @IBOutlet weak var inputTxtField: UITextField!
   @IBOutlet weak var converter: UISwitch!
@@ -33,7 +33,7 @@ class ViewController: UIViewController {
         let numberArr = value.components(separatedBy: " ").flatMap({ Int($0) })
         self?.numbers.value = numberArr
       })
-    .disposed(by: bag)
+      .disposed(by: bag)
     
     Observable.combineLatest(
       numbers.asObservable(),
@@ -45,14 +45,14 @@ class ViewController: UIViewController {
           return currentNumbers.reduce(1, { $0 * $1} )
         }
     })
-    .bind(to: result)
-    .disposed(by: bag)
+      .bind(to: result)
+      .disposed(by: bag)
     
     result.asObservable()
       .subscribe(onNext: { [weak self] value in
         self?.outputTxtField.text = String(value)
-    })
-    .disposed(by: bag)
+      })
+      .disposed(by: bag)
     
     
   }
